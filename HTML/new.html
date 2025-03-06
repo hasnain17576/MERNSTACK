@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasnain Shoes Company</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f3;
+            color: #333;
+            padding: 20px;
+        }
+        header, nav, section, footer {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #007BFF;
+        }
+        header {
+            text-align: center;
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        nav ul li {
+            display: inline;
+        }
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            background: #007BFF;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        .shoe-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .shoe-item {
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            padding: 10px;
+            background: white;
+            text-align: center;
+            width: 200px;
+        }
+        .shoe-item img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hasnain Shoes Company</h1>
+        <p>Providing Quality Footwear Since 2000</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <main id="home">
+        <h2>Our Latest Collection</h2>
+        <div class="shoe-container">
+            <div class="shoe-item">
+                <img src="images/men-sneaker-shoes-1000x1000.jpg" alt="Men's Sneaker Shoes">
+                <p>Men's Sneaker Shoes - $50</p>
+            </div>
+            <div class="shoe-item">
+                <img src="images/M-DC-0200079BROWN.webp" alt="Brown Formal Shoe">
+                <p>Brown Formal Shoe - $80</p>
+            </div>
+            <div class="shoe-item">
+                <img src="images/L-AC-0100077NAVY.webp" alt="Navy Sports Shoes">
+                <p>Navy Sports Shoes - $60</p>
+            </div>
+            <div class="shoe-item">
+                <img src="images/casual-shoes.jpg" alt="Casual Shoes">
+                <p>Casual Shoes - $55</p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Hasnain Shoes Company - All Rights Reserved</p>
+    </footer>
+</body>
+</html>

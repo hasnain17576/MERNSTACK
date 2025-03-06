@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Web Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f3;
+            color: #333;
+            padding: 20px;
+        }
+        header, nav, section, article, footer {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #007BFF;
+        }
+        header {
+            text-align: center;
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        nav ul li {
+            display: inline;
+        }
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            background: #007BFF;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        main {
+            background: #d9ecff;
+            border: 2px solid #007BFF;
+            padding: 20px;
+        }
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+        .contact-info {
+            display: none;
+            background: #d9ecff;
+            border: 2px solid #007BFF;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        nav ul li:hover .contact-info {
+            display: block;
+            position: absolute;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Comprehensive HTML & CSS Web Page</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="https://www.youtube.com" target="_blank">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li>
+                <a href="#">Contact</a>
+                <div class="contact-info">
+                    <p>Email: <a href="mailto:hasnainwasli17@gmail.com">hasnainwasli17@gmail.com</a></p>
+                    <p>Phone: <a href="tel:03126430166">03126430166</a></p>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Welcome Section</h2>
+            <p>This section contains some important information.</p>
+        </section>
+        <article>
+            <h2>Article Section</h2>
+            <p>This is an example of an article block.</p>
+        </article>
+    </main>
+    <footer>
+        <p>&copy; 2025 All Rights Reserved</p>
+    </footer>
+</body>
+</html>

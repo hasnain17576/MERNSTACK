@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Web Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+        header, nav, section, article, aside, footer {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            text-align: center;
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        nav ul li {
+            display: inline;
+        }
+        nav a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        main {
+            flex: 2;
+        }
+        aside {
+            flex: 1;
+            background: #e0e0e0;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+            text-align: center;
+        }
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Comprehensive HTML & CSS Web Page</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="https://www.youtube.com" target="_blank">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <main>
+            <section>
+                <h2>Welcome Section</h2>
+                <p>This section contains some important information.</p>
+            </section>
+            <article>
+                <h2>Article Section</h2>
+                <p>This is an example of an article block.</p>
+            </article>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                </tr>
+                <tr>
+                    <td>John</td>
+                    <td>30</td>
+                </tr>
+                <tr>
+                    <td>Jane</td>
+                    <td>25</td>
+                </tr>
+            </table>
+        </main>
+        <aside>
+            <h3>Sidebar</h3>
+            <p>This is an aside section.</p>
+        </aside>
+    </div>
+    <footer>
+        <p>&copy; 2025 All Rights Reserved</p>
+    </footer>
+</body>
+</html>

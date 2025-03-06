@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Web Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f3;
+            color: #333;
+            padding: 20px;
+        }
+        header, nav, section, article, aside, footer {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #007BFF;
+        }
+        header {
+            text-align: center;
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        nav ul li {
+            display: inline;
+        }
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            background: #007BFF;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        main {
+            flex: 2;
+            background: #d9ecff;
+            border: 2px solid #007BFF;
+        }
+        aside {
+            flex: 1;
+            background: #cfe2f3;
+            border: 2px solid #0056b3;
+        }
+        table, th, td {
+            border: 2px solid #007BFF;
+            border-collapse: collapse;
+            padding: 10px;
+            text-align: center;
+            background: #d9ecff;
+        }
+        #contact {
+            border: 2px solid #007BFF;
+            background-color: #d9ecff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        #contact h2 {
+            color: #0056b3;
+        }
+        #contact a {
+            color: #007BFF;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Comprehensive HTML & CSS Web Page</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="https://www.youtube.com" target="_blank">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <main>
+            <section>
+                <h2>Welcome Section</h2>
+                <p>This section contains some important information.</p>
+            </section>
+            <article>
+                <h2>Article Section</h2>
+                <p>This is an example of an article block.</p>
+            </article>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                </tr>
+                <tr>
+                    <td>John</td>
+                    <td>30</td>
+                </tr>
+                <tr>
+                    <td>Jane</td>
+                    <td>25</td>
+                </tr>
+            </table>
+        </main>
+        <aside>
+            <h3>Sidebar</h3>
+            <p>This is an aside section.</p>
+        </aside>
+    </div>
+    <section id="contact">
+        <h2>Contact Information</h2>
+        <p>Email: <a href="mailto:hasnainwasli17@gmail.com">hasnainwasli17@gmail.com</a></p>
+        <p>Phone: <a href="tel:03126430166">03126430166</a></p>
+    </section>
+    <footer>
+        <p>&copy; 2025 All Rights Reserved</p>
+    </footer>
+</body>
+</html>
