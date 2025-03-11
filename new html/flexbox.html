@@ -1,0 +1,41 @@
+import React from "react";
+
+const HomePage = () => {
+  return (
+    <div className="flex flex-col min-h-screen bg-gray-100">
+      {/* Navbar */}
+      <nav className="flex justify-between items-center bg-blue-500 text-white p-4">
+        <h1 className="text-xl font-bold">MERN Flexbox Page</h1>
+        <ul className="flex gap-4">
+          <li><a href="#" className="hover:underline">Home</a></li>
+          <li><a href="#" className="hover:underline">About</a></li>
+          <li><a href="#" className="hover:underline">Contact</a></li>
+        </ul>
+      </nav>
+      
+      {/* Main Content */}
+      <main className="flex flex-1 justify-center items-center p-6">
+        <div className="flex flex-col md:flex-row bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+          <div className="flex-1 p-4">
+            <h2 className="text-2xl font-semibold">Welcome to MERN Flexbox Page</h2>
+            <p className="mt-2 text-gray-600">This is a simple page layout using Flexbox with Tailwind CSS.</p>
+          </div>
+          <div className="flex-1 p-4 flex justify-center items-center">
+            <img 
+              src="https://via.placeholder.com/300" 
+              alt="Placeholder" 
+              className="rounded-lg shadow-md"
+            />
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-blue-500 text-white text-center p-4">
+        <p>&copy; 2025 MERN Flexbox Page. All rights reserved.</p>
+      </footer>
+    </div>
+  );
+};
+
+export default HomePage;

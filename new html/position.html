@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Positioning Example</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            position: fixed;
+            width: 100%;
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .container {
+            margin-top: 70px;
+            padding: 20px;
+        }
+
+        .relative-box {
+            position: relative;
+            left: 30px;
+            background: lightblue;
+            padding: 10px;
+            border: 1px solid blue;
+        }
+
+        .absolute-box {
+            position: absolute;
+            top: 100px;
+            right: 50px;
+            background: lightcoral;
+            padding: 10px;
+            border: 1px solid red;
+        }
+
+        .sticky-box {
+            position: sticky;
+            top: 0;
+            background: yellow;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: black;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .spacer {
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">Fixed Header</div>
+
+    <div class="container">
+        <div class="sticky-box">Sticky Header</div>
+        <div class="relative-box">Relative Box</div>
+        <div class="absolute-box">Absolute Box</div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="footer">Fixed Footer</div>
+
+</body>
+</html>
