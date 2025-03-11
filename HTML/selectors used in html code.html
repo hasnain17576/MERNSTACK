@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full CSS Selectors Example</title>
+    <style>
+        /* Universal Selector */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Type Selector */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* ID Selector */
+        #main-container {
+            width: 80%;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Class Selector */
+        .highlight {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* Attribute Selector */
+        input[type="text"] {
+            border: 2px solid blue;
+            padding: 5px;
+            width: 100%;
+        }
+
+        /* Pseudo-Class Selector */
+        a:hover {
+            color: green;
+            text-decoration: none;
+        }
+
+        /* Pseudo-Element Selector */
+        p::first-letter {
+            font-size: 2em;
+            color: blue;
+        }
+
+        /* nth-child Selector */
+        ul li:nth-child(odd) {
+            background: #ddd;
+        }
+
+        /* Adjacent Sibling Selector */
+        h1 + p {
+            font-style: italic;
+            color: gray;
+        }
+
+        /* Child Selector */
+        div > p {
+            padding: 10px;
+            border-left: 5px solid purple;
+        }
+
+        /* General Sibling Selector */
+        h2 ~ p {
+            background: lightyellow;
+        }
+
+        /* Media Query */
+        @media (max-width: 600px) {
+            #main-container {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Full CSS Selectors Web Page</h1>
+
+    <div id="main-container">
+        <h2>Selectors in Action</h2>
+        
+        <p class="highlight">This is a paragraph with a class selector.</p>
+        <p>This paragraph uses the ::first-letter pseudo-element.</p>
+        
+        <input type="text" placeholder="Attribute Selector Example">
+
+        <ul>
+            <li>List Item 1</li>
+            <li>List Item 2</li>
+            <li>List Item 3</li>
+        </ul>
+
+        <a href="#">Hover over this link</a>
+    </div>
+
+</body>
+</html>
