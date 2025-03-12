@@ -1,0 +1,15 @@
+import { useState } from "react";
+import "./App.css";
+
+export default function AnimatedPage() {
+  const [showCard, setShowCard] = useState(false);
+
+  return (
+    <div className="container">
+      <button className="toggle-btn" onClick={() => setShowCard(!showCard)}>
+        {showCard ? "Hide" : "Show"} Card
+      </button>
+      {showCard && <div className="animated-card">I am an animated card!</div>}
+    </div>
+  );
+}
