@@ -1,0 +1,8 @@
+body { font-family: Arial; margin: 0; }
+nav { background: #333; color: white; padding: 1rem; }
+nav h1 { margin: 0; }
+nav ul { list-style: none; padding: 0; }
+nav ul li { display: inline; margin-left: 1rem; }
+nav ul li a { color: white; text-decoration: none; }
+div { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+h2 { margin-top: 0; }

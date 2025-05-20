@@ -1,0 +1,245 @@
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+.error-message {
+  background-color: #fff2f0;
+  color: #ff4d4f;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  border: 1px solid #ffccc7;
+}
+
+.success-message {
+  background-color: #f6ffed;
+  color: #52c41a;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  border: 1px solid #b7eb8f;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  margin: 0 auto 40px;
+  padding: 25px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form input {
+  padding: 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background-color: white;
+  color: #333;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.form input:focus {
+  border-color: #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  outline: none;
+}
+
+.form button {
+  padding: 12px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.form button:hover {
+  background-color: #40a9ff;
+  transform: translateY(-1px);
+}
+
+.class-filter {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.class-select {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  background-color: white;
+  color: #333;
+  border: 1px solid #d9d9d9;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.class-select:focus {
+  border-color: #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  outline: none;
+}
+
+.classes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.class-section {
+  background-color: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.class-section h2 {
+  color: #1890ff;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.students-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+.student-card {
+  background-color: #fafafa;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: left;
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s;
+}
+
+.student-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.student-card h3 {
+  margin-top: 0;
+  color: #1890ff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.student-card p {
+  margin: 8px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.fee-status {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.fee-button {
+  padding: 8px 12px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+
+.fee-button.paid {
+  background-color: #52c41a;
+  color: white;
+}
+
+.fee-button.unpaid {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+.fee-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fee-button.paid:hover {
+  background-color: #73d13d;
+}
+
+.fee-button.unpaid:hover {
+  background-color: #ff7875;
+}
+
+h1 {
+  color: #1890ff;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 40px;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #1890ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #1890ff;
+  font-weight: 500;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+} 
