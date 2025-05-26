@@ -2,13 +2,106 @@ import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [cart, setCart] = useState([])
-  const [showCart, setShowCart] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState('all')
+  // State Management
+  const [students, setStudents] = useState([])
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [selectedClass, setSelectedClass] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [showSearch, setShowSearch] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
+  // New Student Form State
+  const [newStudent, setNewStudent] = useState({
+    name: '',
+    fatherName: '',
+    class: '',
+    section: '',
+    rollNumber: '',
+    feeAmount: '',
+    feeStatus: 'Pending',
+    admissionDate: '',
+    contactNumber: '',
+    feeMonth: '1' // Default to January
+  })
+
+  // Fee Months
+  const feeMonths = [
+    { id: '1', name: 'January' },
+    { id: '2', name: 'February' },
+    { id: '3', name: 'March' },
+    { id: '4', name: 'April' },
+    { id: '5', name: 'May' },
+    { id: '6', name: 'June' },
+    { id: '7', name: 'July' },
+    { id: '8', name: 'August' },
+    { id: '9', name: 'September' },
+    { id: '10', name: 'October' },
+    { id: '11', name: 'November' },
+    { id: '12', name: 'December' }
+  ]
+
+  // Edit Student State
+  const [editingStudent, setEditingStudent] = useState(null)
+  const [showEditModal, setShowEditModal] = useState(false)
+
+  // Sample Data
+  const classes = [
+    { id: 'all', name: 'All Classes' },
+    { id: '1', name: 'Class 1' },
+    { id: '2', name: 'Class 2' },
+    { id: '3', name: 'Class 3' },
+    { id: '4', name: 'Class 4' },
+    { id: '5', name: 'Class 5' },
+    { id: '6', name: 'Class 6' },
+    { id: '7', name: 'Class 7' },
+    { id: '8', name: 'Class 8' },
+    { id: '9', name: 'Class 9' },
+    { id: '10', name: 'Class 10' }
+  ]
+
+  const sections = ['A', 'B', 'C']
+
+  // Sample Students Data
+  const [sampleStudents, setSampleStudents] = useState([
+    {
+      id: 1,
+      name: "Ahmed Khan",
+      fatherName: "Mohammad Khan",
+      class: "9",
+      section: "A",
+      rollNumber: "001",
+      feeAmount: 5000,
+      feeStatus: "Paid",
+      admissionDate: "2024-01-15",
+      contactNumber: "03001234567"
+    },
+    {
+      id: 2,
+      name: "Sara Ahmed",
+      fatherName: "Ali Ahmed",
+      class: "10",
+      section: "B",
+      rollNumber: "002",
+      feeAmount: 5500,
+      feeStatus: "Pending",
+      admissionDate: "2024-01-10",
+      contactNumber: "03001234568"
+    },
+    {
+      id: 3,
+      name: "Usman Ali",
+      fatherName: "Hassan Ali",
+      class: "8",
+      section: "C",
+      rollNumber: "003",
+      feeAmount: 4800,
+      feeStatus: "Paid",
+      admissionDate: "2024-01-20",
+      contactNumber: "03001234569"
+    }
+  ])
+
+  // Scroll Effect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
@@ -17,97 +110,245 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const categories = [
-    { id: 'all', name: 'All Products' },
-    { id: 'electronics', name: 'Electronics' },
-    { id: 'fashion', name: 'Fashion' },
-    { id: 'home', name: 'Home & Living' },
-    { id: 'beauty', name: 'Beauty' },
-    { id: 'sports', name: 'Sports' }
-  ]
+  // Filter Students
+  const filteredStudents = selectedClass === 'all' 
+    ? sampleStudents 
+    : sampleStudents.filter(student => student.class === selectedClass)
 
-  const products = [
-    {
-      id: 1,
-      name: "Premium Wireless Headphones",
-      price: 99.99,
-      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500",
-      description: "High-quality wireless headphones with noise cancellation",
-      category: "electronics",
-      rating: 4.5,
-      reviews: 128,
-      stock: 15,
-      discount: 20,
-      isPrime: true
-    },
-    {
-      id: 2,
-      name: "Smart Watch Series 5",
-      price: 199.99,
-      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500",
-      description: "Latest smartwatch with health monitoring features",
-      category: "electronics",
-      rating: 4.8,
-      reviews: 256,
-      stock: 8,
-      discount: 15,
-      isPrime: true
-    },
-    {
-      id: 3,
-      name: "Portable Bluetooth Speaker",
-      price: 79.99,
-      image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500",
-      description: "Waterproof portable speaker with 20-hour battery life",
-      category: "electronics",
-      rating: 4.3,
-      reviews: 89,
-      stock: 20,
-      discount: 10,
-      isPrime: false
-    },
-    {
-      id: 4,
-      name: "Designer Watch",
-      price: 299.99,
-      image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=500",
-      description: "Luxury designer watch with premium materials",
-      category: "fashion",
-      rating: 4.7,
-      reviews: 156,
-      stock: 5,
-      discount: 25,
-      isPrime: true
-    },
-    {
-      id: 5,
-      name: "Modern Coffee Table",
-      price: 249.99,
-      image: "https://images.unsplash.com/photo-1532372320572-cda25653a26f?w=500",
-      description: "Contemporary coffee table with storage",
-      category: "home",
-      rating: 4.6,
-      reviews: 92,
-      stock: 12,
-      discount: 0,
-      isPrime: true
+  // Handle Form Input Changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setNewStudent(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  // Add new state for add student flow
+  const [showClassMonthModal, setShowClassMonthModal] = useState(false)
+  const [selectedAddClass, setSelectedAddClass] = useState('')
+  const [selectedAddMonth, setSelectedAddMonth] = useState('1')
+
+  // Modify the Add Student Modal to show class and month selection first
+  const AddStudentModal = () => {
+    if (!showAddModal) return null
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg p-8 max-w-md w-full">
+          {!selectedAddClass ? (
+            // Step 1: Select Class
+            <div className="animate-fadeIn">
+              <h2 className="text-2xl font-bold mb-4">Select Class</h2>
+              <div className="grid grid-cols-2 gap-4">
+                {classes.filter(c => c.id !== 'all').map(classItem => (
+                  <button
+                    key={classItem.id}
+                    onClick={() => setSelectedAddClass(classItem.id)}
+                    className="p-4 rounded-lg text-center bg-white border border-gray-200 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300"
+                  >
+                    <h3 className="text-lg font-semibold">{classItem.name}</h3>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : !selectedAddMonth ? (
+            // Step 2: Select Month
+            <div className="animate-fadeIn">
+              <h2 className="text-2xl font-bold mb-4">Select Month for Class {selectedAddClass}</h2>
+              <div className="grid grid-cols-3 gap-4">
+                {feeMonths.map(month => (
+                  <button
+                    key={month.id}
+                    onClick={() => setSelectedAddMonth(month.id)}
+                    className="p-4 rounded-lg text-center bg-white border border-gray-200 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300"
+                  >
+                    <h3 className="text-lg font-semibold">{month.name}</h3>
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={() => setSelectedAddClass('')}
+                className="mt-4 text-gray-500 hover:text-primary"
+              >
+                ← Back to Class Selection
+              </button>
+            </div>
+          ) : (
+            // Step 3: Add Student Details
+            <div className="animate-fadeIn">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-bold">Add New Student</h2>
+                <div className="text-sm text-gray-500">
+                  Class {selectedAddClass} - {feeMonths.find(m => m.id === selectedAddMonth)?.name}
+                </div>
+              </div>
+              <form onSubmit={handleAddStudent}>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Student Name</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={newStudent.name}
+                      onChange={handleInputChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Father's Name</label>
+                    <input
+                      type="text"
+                      name="fatherName"
+                      value={newStudent.fatherName}
+                      onChange={handleInputChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                      required
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Section</label>
+                      <select
+                        name="section"
+                        value={newStudent.section}
+                        onChange={handleInputChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                        required
+                      >
+                        <option value="">Select Section</option>
+                        {sections.map(s => (
+                          <option key={s} value={s}>{s}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Roll Number</label>
+                      <input
+                        type="text"
+                        name="rollNumber"
+                        value={newStudent.rollNumber}
+                        onChange={handleInputChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Fee Amount (Rs.)</label>
+                    <input
+                      type="number"
+                      name="feeAmount"
+                      value={newStudent.feeAmount}
+                      onChange={handleInputChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Admission Date</label>
+                    <input
+                      type="date"
+                      name="admissionDate"
+                      value={newStudent.admissionDate}
+                      onChange={handleInputChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Contact Number</label>
+                    <input
+                      type="tel"
+                      name="contactNumber"
+                      value={newStudent.contactNumber}
+                      onChange={handleInputChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="mt-6 flex justify-between">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedAddMonth('')}
+                    className="text-gray-500 hover:text-primary"
+                  >
+                    ← Back to Month Selection
+                  </button>
+                  <div className="space-x-3">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowAddModal(false)
+                        setSelectedAddClass('')
+                        setSelectedAddMonth('')
+                      }}
+                      className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
+                    >
+                      Add Student
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  // Modify handleAddStudent to include class and month
+  const handleAddStudent = (e) => {
+    e.preventDefault()
+    const newId = sampleStudents.length + 1
+    const studentToAdd = {
+      ...newStudent,
+      id: newId,
+      class: selectedAddClass,
+      feeMonth: selectedAddMonth,
+      feeAmount: Number(newStudent.feeAmount)
     }
-  ]
-
-  const filteredProducts = selectedCategory === 'all' 
-    ? products 
-    : products.filter(product => product.category === selectedCategory)
-
-  const addToCart = (product) => {
-    setCart([...cart, product])
-    showNotification(`${product.name} added to cart!`)
+    setSampleStudents(prev => [...prev, studentToAdd])
+    setShowAddModal(false)
+    setSelectedAddClass('')
+    setSelectedAddMonth('')
+    setNewStudent({
+      name: '',
+      fatherName: '',
+      class: '',
+      section: '',
+      rollNumber: '',
+      feeAmount: '',
+      feeStatus: 'Pending',
+      admissionDate: '',
+      contactNumber: '',
+      feeMonth: '1'
+    })
+    showNotification('Student added successfully!')
   }
 
-  const removeFromCart = (productId) => {
-    setCart(cart.filter(item => item.id !== productId))
-    showNotification('Item removed from cart')
+  // Modify the Add New Student button click handler
+  const handleAddNewStudentClick = () => {
+    setSelectedAddClass('')
+    setSelectedAddMonth('')
+    setShowAddModal(true)
   }
 
+  // Delete Student
+  const handleDeleteStudent = (id) => {
+    setSampleStudents(prev => prev.filter(student => student.id !== id))
+    showNotification('Student deleted successfully!')
+  }
+
+  // Show Notification
   const showNotification = (message) => {
     const notification = document.createElement('div')
     notification.className = 'notification'
@@ -116,266 +357,383 @@ function App() {
     setTimeout(() => notification.remove(), 3000)
   }
 
-  const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price, 0).toFixed(2)
+  // Handle Edit Student
+  const handleEditStudent = (student) => {
+    setEditingStudent(student)
+    setShowEditModal(true)
   }
 
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Top Bar */}
-      <div className="bg-primary text-white py-2">
-        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <span className="text-sm font-medium">Free shipping on orders over $50</span>
-            <span className="text-sm">|</span>
-            <span className="text-sm font-medium">30-day return policy</span>
+  // Handle Update Student
+  const handleUpdateStudent = (e) => {
+    e.preventDefault()
+    setSampleStudents(prev => prev.map(student => 
+      student.id === editingStudent.id 
+        ? { ...student, feeStatus: 'Paid' }
+        : student
+    ))
+    setShowEditModal(false)
+    setEditingStudent(null)
+    showNotification('Fee status updated successfully!')
+  }
+
+  // Edit Modal Component
+  const EditStudentModal = () => {
+    if (!showEditModal || !editingStudent) return null
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg p-8 max-w-md w-full">
+          <h2 className="text-2xl font-bold mb-4">Update Fee Status</h2>
+          <div className="mb-4">
+            <p className="text-gray-600">Student: {editingStudent.name}</p>
+            <p className="text-gray-600">Class: {editingStudent.class}</p>
+            <p className="text-gray-600">Fee Amount: Rs. {editingStudent.feeAmount}</p>
           </div>
-          <div className="flex items-center space-x-4">
-            <a href="#" className="text-sm hover:text-accent transition-colors">Track Order</a>
-            <a href="#" className="text-sm hover:text-accent transition-colors">Help</a>
+          <form onSubmit={handleUpdateStudent}>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Fee Status</label>
+                <select
+                  name="feeStatus"
+                  value={editingStudent.feeStatus}
+                  onChange={(e) => setEditingStudent(prev => ({ ...prev, feeStatus: e.target.value }))}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                  required
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="Paid">Paid</option>
+                </select>
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end space-x-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowEditModal(false)
+                  setEditingStudent(null)
+                }}
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
+              >
+                Update Status
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    )
+  }
+
+  // Export to CSV
+  const handleExportData = () => {
+    const headers = ['Roll No', 'Student Name', 'Father\'s Name', 'Class', 'Section', 'Fee Amount', 'Fee Month', 'Fee Status']
+    const csvData = filteredStudents.map(student => [
+      student.rollNumber,
+      student.name,
+      student.fatherName,
+      `Class ${student.class}`,
+      student.section,
+      `Rs. ${student.feeAmount}`,
+      feeMonths.find(m => m.id === student.feeMonth)?.name || 'Not Set',
+      student.feeStatus
+    ])
+
+    const csvContent = [
+      headers.join(','),
+      ...csvData.map(row => row.join(','))
+    ].join('\n')
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const link = document.createElement('a')
+    const url = URL.createObjectURL(blob)
+    link.setAttribute('href', url)
+    link.setAttribute('download', `class_${selectedClass}_fees_${new Date().toISOString().split('T')[0]}.csv`)
+    link.style.visibility = 'hidden'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
+  // Print Records
+  const handlePrintRecords = () => {
+    const printWindow = window.open('', '_blank')
+    const title = selectedClass === 'all' ? 'All Classes' : `Class ${selectedClass}`
+    
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>${title} - Fee Records</title>
+          <style>
+            body { font-family: Arial, sans-serif; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f5f5f5; }
+            .header { text-align: center; margin-bottom: 20px; }
+            .paid { color: green; }
+            .pending { color: red; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1>HASSAN PUBLIC HIGH SCHOOL</h1>
+            <h2>${title} - Fee Records</h2>
+            <p>Generated on: ${new Date().toLocaleDateString()}</p>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Roll No</th>
+                <th>Student Name</th>
+                <th>Father's Name</th>
+                <th>Class</th>
+                <th>Section</th>
+                <th>Fee Amount</th>
+                <th>Fee Month</th>
+                <th>Fee Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filteredStudents.map(student => `
+                <tr>
+                  <td>${student.rollNumber}</td>
+                  <td>${student.name}</td>
+                  <td>${student.fatherName}</td>
+                  <td>Class ${student.class}</td>
+                  <td>${student.section}</td>
+                  <td>Rs. ${student.feeAmount}</td>
+                  <td>${feeMonths.find(m => m.id === student.feeMonth)?.name || 'Not Set'}</td>
+                  <td class="${student.feeStatus.toLowerCase()}">${student.feeStatus}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </body>
+      </html>
+    `)
+    
+    printWindow.document.close()
+    printWindow.focus()
+    printWindow.print()
+    printWindow.close()
+  }
+
+  // Add new state for selected month
+  const [selectedMonth, setSelectedMonth] = useState('1')
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* Top Bar */}
+      <div className="bg-gradient-to-r from-primary to-accent text-white py-3 shadow-md">
+        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
+          <div className="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            <span className="text-lg font-bold tracking-wide">HASSAN PUBLIC HIGH SCHOOL</span>
+          </div>
+          <div className="hidden md:flex items-center space-x-4">
+            <span className="text-sm bg-white/10 px-3 py-1 rounded-full">Academic Year 2024</span>
+            <span className="text-sm bg-white/10 px-3 py-1 rounded-full">Est. 1990</span>
+            <span className="text-sm bg-white/10 px-3 py-1 rounded-full">info@school.com</span>
           </div>
         </div>
       </div>
 
-      {/* Navigation */}
-      <nav className="nav sticky top-0 z-50">
+      {/* Navigation Bar */}
+      <nav className="nav sticky top-0 z-50 bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-between items-center h-20">
-            {/* Left side navigation */}
-            <div className="flex items-center space-x-8">
-              <div className="hidden md:flex space-x-6">
-                {categories.map(category => (
-                  <button
-                    key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
-                    className={`nav-link ${
-                      selectedCategory === category.id ? 'text-primary font-semibold' : ''
-                    }`}
-                  >
-                    {category.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Center Logo */}
-            <div className="absolute left-1/2 transform -translate-x-1/2">
-              <div className="nav-logo">
-                <img 
-                  src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=100" 
-                  alt="DropShop Logo" 
-                  className="h-12 w-12 rounded-full object-cover"
-                />
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  DropShop
-                </h1>
-              </div>
-            </div>
-
-            {/* Right side navigation */}
-            <div className="flex items-center space-x-6">
+          <div className="flex justify-between items-center h-16 relative">
+            {/* Left: Add New Student */}
+            <div className="flex items-center">
               <button 
-                className="text-text-light hover:text-primary transition-colors"
-                onClick={() => setShowSearch(!showSearch)}
+                className="btn btn-primary flex items-center space-x-2"
+                onClick={handleAddNewStudentClick}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
+                <span>Add New Student</span>
               </button>
-              <button className="text-text-light hover:text-primary transition-colors">Sign In</button>
-              <button className="relative" onClick={() => setShowCart(!showCart)}>
-                <span className="absolute -top-2 -right-2 bg-accent text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium">
-                  {cart.length}
-                </span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-text-light hover:text-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+            </div>
+            {/* Right: All Classes */}
+            <div className="flex items-center">
+              <button
+                onClick={() => setSelectedClass('all')}
+                className={`nav-link ${selectedClass === 'all' ? 'text-primary font-semibold' : ''}`}
+              >
+                All Classes
               </button>
             </div>
           </div>
-
-          {/* Search Bar */}
-          {showSearch && (
-            <div className="mt-4 animate-fadeIn">
-              <div className="search-bar">
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="search-input"
-                />
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-            </div>
-          )}
         </div>
       </nav>
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-primary to-accent text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4 animate-fadeIn">Welcome to DropShop</h2>
-          <p className="text-xl mb-8 animate-fadeIn delay-200">Your one-stop shop for premium products</p>
-          <div className="flex justify-center space-x-4 animate-fadeIn delay-300">
-            <button className="btn btn-primary">
-              Shop Now
-            </button>
-            <button className="btn btn-secondary text-white border-white hover:bg-white hover:text-primary">
-              Learn More
-            </button>
+      <section className="relative bg-gradient-to-br from-primary to-accent text-white py-20 flex items-center justify-center">
+        <div className="absolute inset-0 bg-[url('/hero-bg.svg')] bg-cover bg-center opacity-10 pointer-events-none" />
+        <div className="relative z-10 text-center animate-fadeIn">
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">Welcome to HASSAN PUBLIC HIGH SCHOOL</h1>
+          <p className="text-xl md:text-2xl mb-8 font-medium drop-shadow">Empowering Students for a Brighter Future</p>
+          <div className="flex justify-center space-x-4">
+            <button className="btn btn-secondary shadow-lg">View Student Records</button>
+            <button className="btn btn-outline-light shadow-lg">Contact Us</button>
           </div>
         </div>
-      </div>
-
-      {/* Products Section */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold">Featured Products</h2>
-          <div className="flex space-x-2">
-            <button className="btn btn-secondary">Sort by: Latest</button>
-            <button className="btn btn-secondary">Filter</button>
-          </div>
-        </div>
-        <div className="product-grid">
-          {filteredProducts.map((product) => (
-            <div key={product.id} className="product-card">
-              <div className="product-image-container">
-                <img 
-                  src={product.image} 
-                  alt={product.name} 
-                  className="product-image-main"
-                />
-                <img 
-                  src={product.image} 
-                  alt={`${product.name} view 1`} 
-                  className="product-image-side"
-                />
-                <img 
-                  src={product.image} 
-                  alt={`${product.name} view 2`} 
-                  className="product-image-side"
-                />
-              </div>
-              <div className="product-info">
-                <div className="flex items-center mb-2">
-                  <div className="flex items-center">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        className={`w-4 h-4 ${
-                          i < Math.floor(product.rating) ? 'text-accent' : 'text-gray-300'
-                        }`}
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                    <span className="ml-2 text-sm text-text-light">({product.reviews})</span>
-                  </div>
-                </div>
-                <h3 className="product-title">{product.name}</h3>
-                <p className="text-text-light mb-4">{product.description}</p>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <span className="product-price">${product.price}</span>
-                    {product.discount > 0 && (
-                      <span className="product-price-original">
-                        ${(product.price * (1 + product.discount / 100)).toFixed(2)}
-                      </span>
-                    )}
-                  </div>
-                  <button 
-                    onClick={() => addToCart(product)}
-                    className="btn btn-primary"
-                  >
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      </section>
 
       {/* Features Section */}
-      <div className="bg-background py-16">
+      <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-surface p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+            <div className="bg-surface p-8 rounded-lg shadow-md text-center hover:shadow-xl transition-shadow animate-fadeInUp">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
-              <h3 className="text-xl font-bold mb-2">Quality Products</h3>
-              <p className="text-text-light">We source only the best products for our customers</p>
+              <h3 className="text-xl font-bold mb-2">Academic Excellence</h3>
+              <p className="text-text-light">Quality education for all students</p>
             </div>
-            <div className="bg-surface p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+            <div className="bg-surface p-8 rounded-lg shadow-md text-center hover:shadow-xl transition-shadow animate-fadeInUp delay-100">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
-              <h3 className="text-xl font-bold mb-2">Fast Delivery</h3>
-              <p className="text-text-light">Quick and reliable shipping worldwide</p>
+              <h3 className="text-xl font-bold mb-2">Safe Environment</h3>
+              <p className="text-text-light">Secure and nurturing learning environment</p>
             </div>
-            <div className="bg-surface p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+            <div className="bg-surface p-8 rounded-lg shadow-md text-center hover:shadow-xl transition-shadow animate-fadeInUp delay-200">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
-              <h3 className="text-xl font-bold mb-2">Secure Payment</h3>
-              <p className="text-text-light">Safe and secure payment methods</p>
+              <h3 className="text-xl font-bold mb-2">Easy Fee Management</h3>
+              <p className="text-text-light">Simple and transparent fee system</p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Fee Records Section */}
+      <section className="bg-background py-16">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h2 className="text-2xl font-bold mb-6 text-primary">Fee Records</h2>
+            {/* Class Selection */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-2">Select Class</h3>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                {classes.filter(c => c.id !== 'all').map(classItem => (
+                  <button
+                    key={classItem.id}
+                    onClick={() => setSelectedClass(classItem.id)}
+                    className={`p-3 rounded-lg text-center transition-all duration-200 font-medium border ${
+                      selectedClass === classItem.id ? 'bg-primary text-white border-primary shadow' : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-primary hover:text-white'
+                    }`}
+                  >
+                    {classItem.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {/* Month Selection */}
+            {selectedClass !== 'all' && (
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold mb-2">Select Month</h3>
+                <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+                  {feeMonths.map(month => (
+                    <button
+                      key={month.id}
+                      onClick={() => setSelectedMonth(month.id)}
+                      className={`p-3 rounded-lg text-center transition-all duration-200 font-medium border ${
+                        selectedMonth === month.id ? 'bg-primary text-white border-primary shadow' : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-primary hover:text-white'
+                      }`}
+                    >
+                      {month.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {/* Fee Table */}
+            {selectedClass !== 'all' && selectedMonth && (
+              <div className="overflow-x-auto animate-fadeIn">
+                <table className="min-w-full bg-white rounded-lg overflow-hidden">
+                  <thead className="bg-gray-100">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Roll No</th>
+                      <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Student Name</th>
+                      <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Father's Name</th>
+                      <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Section</th>
+                      <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Fee Amount</th>
+                      <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Fee Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {filteredStudents
+                      .filter(student => student.feeMonth === selectedMonth)
+                      .map((student) => (
+                        <tr key={student.id} className="hover:bg-gray-50">
+                          <td className="px-6 py-4 whitespace-nowrap">{student.rollNumber}</td>
+                          <td className="px-6 py-4 whitespace-nowrap">{student.name}</td>
+                          <td className="px-6 py-4 whitespace-nowrap">{student.fatherName}</td>
+                          <td className="px-6 py-4 whitespace-nowrap">{student.section}</td>
+                          <td className="px-6 py-4 whitespace-nowrap">Rs. {student.feeAmount}</td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                              student.feeStatus === 'Paid' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                            }`}>
+                              {student.feeStatus}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <button 
+                              className="text-primary hover:text-primary-dark mr-3"
+                              onClick={() => handleEditStudent(student)}
+                            >
+                              Edit
+                            </button>
+                            <button 
+                              className="text-red-600 hover:text-red-900"
+                              onClick={() => handleDeleteStudent(student.id)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
-      <footer className="footer">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <footer className="bg-gradient-to-r from-primary to-accent text-white mt-auto">
+        <div className="max-w-7xl mx-auto px-4 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-xl font-bold mb-4">DropShop</h3>
-              <p className="text-text-light">Your trusted source for quality products</p>
-              <div className="mt-4 flex space-x-4">
-                <a href="#" className="text-text-light hover:text-surface transition-colors">
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                  </svg>
-                </a>
-                <a href="#" className="text-text-light hover:text-surface transition-colors">
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                  </svg>
-                </a>
-                <a href="#" className="text-text-light hover:text-surface transition-colors">
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
-                  </svg>
-                </a>
-              </div>
+              <h3 className="text-xl font-bold mb-4">Contact Us</h3>
+              <p className="text-text-light">Email: info@school.com</p>
+              <p className="text-text-light">Phone: (123) 456-7890</p>
+              <p className="text-text-light">Address: 123 School Street, City</p>
             </div>
             <div>
               <h3 className="text-xl font-bold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                <li><a href="#" className="footer-link">About Us</a></li>
+                <li><a href="#" className="footer-link">About School</a></li>
+                <li><a href="#" className="footer-link">Admissions</a></li>
+                <li><a href="#" className="footer-link">Academic Calendar</a></li>
                 <li><a href="#" className="footer-link">Contact</a></li>
-                <li><a href="#" className="footer-link">Shipping Policy</a></li>
-                <li><a href="#" className="footer-link">Returns</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold mb-4">Customer Service</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="footer-link">FAQ</a></li>
-                <li><a href="#" className="footer-link">Track Order</a></li>
-                <li><a href="#" className="footer-link">Privacy Policy</a></li>
-                <li><a href="#" className="footer-link">Terms & Conditions</a></li>
               </ul>
             </div>
             <div>
               <h3 className="text-xl font-bold mb-4">Newsletter</h3>
-              <p className="text-text-light mb-4">Subscribe to our newsletter for updates and offers</p>
+              <p className="text-text-light mb-4">Subscribe for school updates</p>
               <form className="flex">
                 <input
                   type="email"
@@ -388,8 +746,8 @@ function App() {
               </form>
             </div>
           </div>
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-text-light">
-            <p>&copy; 2024 DropShop. All rights reserved.</p>
+          <div className="border-t border-white/30 mt-8 pt-8 text-center text-text-light">
+            <p>&copy; 2024 HASSAN PUBLIC HIGH SCHOOL. All rights reserved.</p>
           </div>
         </div>
       </footer>
